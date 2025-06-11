@@ -1,8 +1,9 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+import os
 
-POSTGRES_DATABASE_URL = 'postgresql://postgres:Bright#1270@localhost/fastapi'
+POSTGRES_DATABASE_URL = os.getenv("POSTGRES_CONN_STRING")
 
 engine = create_engine(POSTGRES_DATABASE_URL)
 
