@@ -1,7 +1,7 @@
 from langchain_ollama import ChatOllama
 from langchain_core.output_parsers import StrOutputParser
 from fastapi import FastAPI
-from app.routers.v1.auth_api import router as auth_router
+from src.routers.v1.auth.auth_api import router as auth_router
 from langchain_core.prompts import (
     SystemMessagePromptTemplate,
     ChatPromptTemplate,
@@ -20,7 +20,7 @@ app = FastAPI(
 )
 
 # Register the auth router
-app.include_router(auth_router, prefix="rag/v1/auth", tags=["Auth"])
+app.include_router(auth_router, prefix="/rag/v1/auth", tags=["Auth"])
 
 # System prompt configuration
 system_prompt = SystemMessagePromptTemplate.from_template(

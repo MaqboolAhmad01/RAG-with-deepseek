@@ -1,9 +1,8 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-import os
+from src.config.env_vars import POSTGRES_DATABASE_URL
 
-POSTGRES_DATABASE_URL = os.getenv("POSTGRES_CONN_STRING")
 
 engine = create_engine(POSTGRES_DATABASE_URL)
 

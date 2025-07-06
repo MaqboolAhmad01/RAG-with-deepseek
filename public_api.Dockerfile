@@ -1,21 +1,19 @@
-# Use official Python image
-FROM python:3.13
+FROM python:3.12-slim-bookworm
 
-# Set working directory
 WORKDIR /app
 
-# Install uv package manager globally
-RUN pip install uv
+RUN apt-get update && apt-get install -y \
+    curl gcc build-essential libpq-dev \
+&& rm -rf /var/lib/apt/lists/*
 
-# Copy project files
-COPY . .
 
-# Install dependencies globally (no venv)
-RUN uv pip install -r requirements.txt --system
+COPY requirements.txt .
 
-# Expose port (optional)
+RUN pip install --upgrade pip && \
+    pip install -r requirements.txt
+    
+COPY ./src ./src
+
 EXPOSE 8000
 
-# Run FastAPI app
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
-
+CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000","--reload", "--reload-dir","src"]
